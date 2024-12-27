@@ -17,10 +17,23 @@ import {
   VStack,
   Button,
   ButtonText,
+  HStack,
 } from "@gluestack-ui/themed";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useNavigation } from "@react-navigation/native";
+import { StackParamList } from "../routes/Stack.routes";
+import { StackNavigationProp } from '@react-navigation/stack';
 
 export default function LoginContainer() {
+
+  type LoginScreenNavigationProp = StackNavigationProp<StackParamList>;
+
+  const navigation = useNavigation<LoginScreenNavigationProp>();
+
+  const navToRecover = () => {
+    navigation.navigate('recoverPassword');
+  };
+
   return (
     <>
       <VStack>
@@ -66,10 +79,9 @@ export default function LoginContainer() {
                   E-mail
                 </FormControlLabelText>
               </FormControlLabel>
-              <Input bgColor="$coolGray400" borderColor="$yellow300">
+              <Input bgColor="$white" borderColor="$yellow300">
                 <InputField
                   type="text"
-                  defaultValue="12345"
                   placeholder="E-mail"
                 />
               </Input>
@@ -97,10 +109,9 @@ export default function LoginContainer() {
               <FormControlLabel mb="$1" marginTop={15}>
                 <FormControlLabelText color="white">Senha</FormControlLabelText>
               </FormControlLabel>
-              <Input bgColor="$coolGray400" borderColor="$yellow300">
+              <Input bgColor="$white" borderColor="$yellow300">
                 <InputField
                   type="password"
-                  defaultValue="12345"
                   placeholder="Senha"
                 />
               </Input>
@@ -117,7 +128,7 @@ export default function LoginContainer() {
               </FormControlError>
             </FormControl>
           </Box>
-      
+
           <Button
             size="lg"
             variant="outline"
@@ -128,12 +139,18 @@ export default function LoginContainer() {
             borderColor="$yellow300"
           >
             <ButtonText color="white">Entrar </ButtonText>
-            <AntDesign name="export" size={24} color="white"/>
+            <AntDesign name="export" size={24} color="white" />
           </Button>
         </Box>
-        <Button size="sm" variant="link" action="primary" isDisabled={false} isFocusVisible={false} >
-          <ButtonText>Esqueci minha senha/Primeiro acesso</ButtonText>
-        </Button>
+        <HStack justifyContent="center">
+          <Button size="sm" variant="link" action="primary" isDisabled={false} isFocusVisible={false} onPress={navToRecover}>
+            <ButtonText>Esqueci minha senha</ButtonText>
+          </Button>
+          <Text top={8} color="#4169E1"> / </Text>
+          <Button size="sm" variant="link" action="primary" isDisabled={false} isFocusVisible={false} >
+            <ButtonText>Primeiro acesso</ButtonText>
+          </Button>
+        </HStack>
       </VStack>
     </>
   );
